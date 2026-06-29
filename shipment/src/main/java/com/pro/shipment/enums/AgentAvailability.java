@@ -1,5 +1,7 @@
 package com.pro.shipment.enums;
 
-public class AgentAvailability {
-
+public enum AgentAvailability {
+	AVAILABLE,
+	BUSY,
+	OFFLINE
 }

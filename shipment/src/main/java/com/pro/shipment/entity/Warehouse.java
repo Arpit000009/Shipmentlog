@@ -7,7 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
+
 
 @Entity
 public class Warehouse {
@@ -25,6 +26,6 @@ public class Warehouse {
     @Column(unique=true)
     private String contactNo;
 
-    @OneToOne(mappedBy="warehouse")
+    @OneToMany(mappedBy="warehouse")
     private List<Shipment> shipments;
 }

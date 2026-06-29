@@ -1,5 +1,9 @@
 package com.pro.shipment.enums;
 
-public class PackageType {
-
+public enum PackageType {
+	DOCUMENT,
+	BOX,
+	PARCEL,
+	ELECTRONICS,
+	FURNITURE
 }
