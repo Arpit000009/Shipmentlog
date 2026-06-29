@@ -2,7 +2,10 @@ package com.pro.shipment.entity;
 
 import java.time.LocalDateTime;
 
+import com.pro.shipment.enums.ShipmentStatus;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
