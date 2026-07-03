@@ -7,4 +7,5 @@ import com.pro.shipment.entity.Customer;
 public interface CustomerService {
 	Customer createCustomer(Customer customer);
 	List<Customer> getAllCustomers();
+	Customer getCustomerById(Long id);
 }
