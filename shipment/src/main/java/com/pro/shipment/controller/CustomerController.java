@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pro.shipment.entity.Customer;
@@ -65,6 +66,15 @@ public class CustomerController {
     public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
 
         customerService.deleteCustomer(id);
+
+        return ResponseEntity.ok("Customer deleted successfully.");
+    }
+    
+    @DeleteMapping
+    public ResponseEntity<String> deleteCustomerByPhone(
+            @RequestParam String phone) {
+
+        customerService.deleteCustomerByPhone(phone);
 
         return ResponseEntity.ok("Customer deleted successfully.");
     }

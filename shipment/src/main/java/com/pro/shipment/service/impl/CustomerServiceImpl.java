@@ -83,4 +83,16 @@ public class CustomerServiceImpl implements CustomerService {
             throw new ResourceNotFoundException("Customer not found with id : " + id);
         }
     }
+    
+    @Override
+    public void deleteCustomerByPhone(String phone) {
+
+        Customer customer = customerRepository.findByPhone(phone);
+
+        if (customer != null) {
+            customerRepository.delete(customer);
+        } else {
+            throw new ResourceNotFoundException("Customer not found with phone number : " + phone);
+        }
+    }
 }
