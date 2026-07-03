@@ -1,5 +1,7 @@
 package com.pro.shipment.service;
 
-public class CustomerService {
+import com.pro.shipment.entity.Customer;
 
+public interface CustomerService {
+	Customer createCustomer(Customer customer);
 }
