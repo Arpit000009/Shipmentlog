@@ -1,7 +1,10 @@
 package com.pro.shipment.service;
 
+import java.util.List;
+
 import com.pro.shipment.entity.Warehouse;
 
 public interface WarehouseService {
 	Warehouse createWarehouse(Warehouse warehouse);
+	List<Warehouse> getAllWarehouses();
 }

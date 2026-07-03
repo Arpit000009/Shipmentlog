@@ -1,5 +1,7 @@
 package com.pro.shipment.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +24,11 @@ public class WarehouseServiceImpl implements WarehouseService {
         }
 
         return warehouseRepository.save(warehouse);
+    }
+    
+    @Override
+    public List<Warehouse> getAllWarehouses() {
+
+        return warehouseRepository.findAll();
     }
 }

@@ -1,8 +1,11 @@
 package com.pro.shipment.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,5 +30,13 @@ public class WarehouseController {
         Warehouse savedWarehouse = warehouseService.createWarehouse(warehouse);
 
         return new ResponseEntity<>(savedWarehouse, HttpStatus.CREATED);
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<Warehouse>> getAllWarehouses() {
+
+        List<Warehouse> warehouses = warehouseService.getAllWarehouses();
+
+        return ResponseEntity.ok(warehouses);
     }
 }
