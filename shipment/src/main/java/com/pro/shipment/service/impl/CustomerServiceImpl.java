@@ -48,4 +48,25 @@ public class CustomerServiceImpl implements CustomerService {
             throw new ResourceNotFoundException("Customer not found with id : " + id);
         }
     }
+    
+    @Override
+    public Customer updateCustomer(Long id, Customer customer) {
+
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+
+        if (optionalCustomer.isPresent()) {
+
+            Customer existingCustomer = optionalCustomer.get();
+
+            existingCustomer.setName(customer.getName());
+            existingCustomer.setEmail(customer.getEmail());
+            existingCustomer.setPhone(customer.getPhone());
+            existingCustomer.setAddress(customer.getAddress());
+
+            return customerRepository.save(existingCustomer);
+        }
+        else {
+            throw new ResourceNotFoundException("Customer not found with id : " + id);
+        }
+    }
 }
