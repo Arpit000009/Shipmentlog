@@ -69,4 +69,18 @@ public class CustomerServiceImpl implements CustomerService {
             throw new ResourceNotFoundException("Customer not found with id : " + id);
         }
     }
+    
+    @Override
+    public void deleteCustomer(Long id) {
+
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+
+        if (optionalCustomer.isPresent()) {
+
+            customerRepository.deleteById(id);
+        }
+        else {
+            throw new ResourceNotFoundException("Customer not found with id : " + id);
+        }
+    }
 }
