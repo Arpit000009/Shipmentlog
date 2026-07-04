@@ -10,4 +10,8 @@ public interface WarehouseService {
 	Warehouse getWarehouseById(Long id);
 	List<Warehouse> getWarehouseByLocation(String location);
 	List<Warehouse> getWarehouseByCapacity(Integer capacity);
+	
+	Warehouse updateWarehouse(Long id, Warehouse warehouse);
+
+	void deleteWarehouse(Long id);
 }

@@ -72,4 +72,41 @@ public class WarehouseServiceImpl implements WarehouseService {
 
         return warehouses;
     }
+    
+    @Override
+    public Warehouse updateWarehouse(Long id, Warehouse warehouse) {
+
+        Optional<Warehouse> optionalWarehouse = warehouseRepository.findById(id);
+
+        if (optionalWarehouse.isPresent()) {
+
+            Warehouse existingWarehouse = optionalWarehouse.get();
+
+            existingWarehouse.setName(warehouse.getName());
+            existingWarehouse.setLocation(warehouse.getLocation());
+            existingWarehouse.setCapacity(warehouse.getCapacity());
+            existingWarehouse.setContactNo(warehouse.getContactNo());
+
+            return warehouseRepository.save(existingWarehouse);
+
+        } else {
+            throw new ResourceNotFoundException("Warehouse not found with id : " + id);
+        }
+    }
+    
+    @Override
+    public void deleteWarehouse(Long id) {
+
+        Optional<Warehouse> optionalWarehouse =
+                warehouseRepository.findById(id);
+
+        if (optionalWarehouse.isPresent()) {
+
+            warehouseRepository.deleteById(id);
+
+        } else {
+            throw new ResourceNotFoundException(
+                    "Warehouse not found with id : " + id);
+        }
+    }
 }
