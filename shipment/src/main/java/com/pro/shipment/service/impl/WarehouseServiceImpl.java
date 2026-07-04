@@ -45,4 +45,31 @@ public class WarehouseServiceImpl implements WarehouseService {
             throw new ResourceNotFoundException("Warehouse not found with id : " + id);
         }
     }
+    
+    @Override
+    public List<Warehouse> getWarehouseByLocation(String location) {
+
+        List<Warehouse> warehouses = warehouseRepository.findByLocation(location);
+
+        if (warehouses.isEmpty()) {
+            throw new ResourceNotFoundException(
+                    "No warehouse found at location : " + location);
+        }
+
+        return warehouses;
+    }
+    
+    @Override
+    public List<Warehouse> getWarehouseByCapacity(Integer capacity) {
+
+        List<Warehouse> warehouses =
+                warehouseRepository.findByCapacityGreaterThan(capacity);
+
+        if (warehouses.isEmpty()) {
+            throw new ResourceNotFoundException(
+                    "No warehouse found with capacity greater than " + capacity);
+        }
+
+        return warehouses;
+    }
 }

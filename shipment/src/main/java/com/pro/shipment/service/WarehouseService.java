@@ -8,4 +8,6 @@ public interface WarehouseService {
 	Warehouse createWarehouse(Warehouse warehouse);
 	List<Warehouse> getAllWarehouses();
 	Warehouse getWarehouseById(Long id);
+	List<Warehouse> getWarehouseByLocation(String location);
+	List<Warehouse> getWarehouseByCapacity(Integer capacity);
 }
