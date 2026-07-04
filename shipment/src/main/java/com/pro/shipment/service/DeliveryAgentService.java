@@ -1,5 +1,14 @@
 package com.pro.shipment.service;
 
-public class DeliveryAgentService {
+import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.pro.shipment.entity.DeliveryAgent;
+
+@Service
+public interface DeliveryAgentService {
+	DeliveryAgent createDeliveryAgent(DeliveryAgent deliveryAgent);
+	List<DeliveryAgent> getAllDeliveryAgents();
+	DeliveryAgent getDeliveryAgentById(Long id);
 }
