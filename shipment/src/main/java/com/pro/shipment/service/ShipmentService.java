@@ -1,5 +1,7 @@
 package com.pro.shipment.service;
 
-public class ShipmentService {
+import com.pro.shipment.entity.Shipment;
 
+public interface ShipmentService {
+	Shipment createShipment(Shipment shipment);
 }

@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.pro.shipment.entity.Shipment;
 
 public interface ShipmentRepository extends JpaRepository<Shipment, Long>{
-
+	boolean existsByTrackingNumber(String trackingNumber);
 }
