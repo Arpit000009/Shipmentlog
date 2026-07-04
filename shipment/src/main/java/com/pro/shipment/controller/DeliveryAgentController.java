@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pro.shipment.entity.DeliveryAgent;
@@ -51,5 +52,35 @@ public class DeliveryAgentController {
                 deliveryAgentService.getDeliveryAgentById(id);
 
         return ResponseEntity.ok(deliveryAgent);
+    }
+    
+    @GetMapping("/phone")
+    public ResponseEntity<DeliveryAgent> getDeliveryAgentByPhone(
+            @RequestParam String phone) {
+
+        DeliveryAgent deliveryAgent =
+                deliveryAgentService.getDeliveryAgentByPhone(phone);
+
+        return ResponseEntity.ok(deliveryAgent);
+    }
+    
+    @GetMapping("/vehicle")
+    public ResponseEntity<DeliveryAgent> getDeliveryAgentByVehicleNo(
+            @RequestParam String vehicleNo) {
+
+        DeliveryAgent deliveryAgent =
+                deliveryAgentService.getDeliveryAgentByVehicleNo(vehicleNo);
+
+        return ResponseEntity.ok(deliveryAgent);
+    }
+    
+    @GetMapping("/rating")
+    public ResponseEntity<List<DeliveryAgent>> getDeliveryAgentsByRating(
+            @RequestParam Double rating) {
+
+        List<DeliveryAgent> deliveryAgents =
+                deliveryAgentService.getDeliveryAgentsByRating(rating);
+
+        return ResponseEntity.ok(deliveryAgents);
     }
 }
