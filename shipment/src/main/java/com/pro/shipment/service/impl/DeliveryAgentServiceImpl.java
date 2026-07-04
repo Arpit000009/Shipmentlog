@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pro.shipment.entity.DeliveryAgent;
+import com.pro.shipment.enums.AgentAvailability;
 import com.pro.shipment.exception.ResourceAlreadyExistsException;
 import com.pro.shipment.exception.ResourceNotFoundException;
 import com.pro.shipment.repository.DeliveryAgentRepository;
@@ -94,5 +95,81 @@ public class DeliveryAgentServiceImpl implements DeliveryAgentService {
 	    }
 
 	    return deliveryAgents;
+	}
+	
+	@Override
+	public DeliveryAgent updateDeliveryAgent(Long id, DeliveryAgent deliveryAgent) {
+
+	    Optional<DeliveryAgent> optionalDeliveryAgent =
+	            deliveryAgentRepository.findById(id);
+
+	    if (optionalDeliveryAgent.isPresent()) {
+
+	        DeliveryAgent existingAgent = optionalDeliveryAgent.get();
+
+	        if (!existingAgent.getPhone().equals(deliveryAgent.getPhone())
+	                && deliveryAgentRepository.existsByPhone(deliveryAgent.getPhone())) {
+
+	            throw new ResourceAlreadyExistsException("Phone number already exists.");
+	        }
+
+	        if (!existingAgent.getVehicleNo().equals(deliveryAgent.getVehicleNo())
+	                && deliveryAgentRepository.existsByVehicleNo(deliveryAgent.getVehicleNo())) {
+
+	            throw new ResourceAlreadyExistsException("Vehicle number already exists.");
+	        }
+
+	        existingAgent.setName(deliveryAgent.getName());
+	        existingAgent.setPhone(deliveryAgent.getPhone());
+	        existingAgent.setVehicleNo(deliveryAgent.getVehicleNo());
+	        existingAgent.setAvailabilityStatus(deliveryAgent.getAvailabilityStatus());
+	        existingAgent.setRating(deliveryAgent.getRating());
+
+	        return deliveryAgentRepository.save(existingAgent);
+
+	    } else {
+
+	        throw new ResourceNotFoundException(
+	                "Delivery Agent not found with id : " + id);
+	    }
+	}
+	
+	@Override
+	public void deleteDeliveryAgent(Long id) {
+
+	    Optional<DeliveryAgent> optionalDeliveryAgent =
+	            deliveryAgentRepository.findById(id);
+
+	    if (optionalDeliveryAgent.isPresent()) {
+
+	        deliveryAgentRepository.deleteById(id);
+
+	    } else {
+
+	        throw new ResourceNotFoundException(
+	                "Delivery Agent not found with id : " + id);
+	    }
+	}
+	
+	@Override
+	public DeliveryAgent updateAvailability(Long id,
+	                                        AgentAvailability availabilityStatus) {
+
+	    Optional<DeliveryAgent> optionalDeliveryAgent =
+	            deliveryAgentRepository.findById(id);
+
+	    if (optionalDeliveryAgent.isPresent()) {
+
+	        DeliveryAgent deliveryAgent = optionalDeliveryAgent.get();
+
+	        deliveryAgent.setAvailabilityStatus(availabilityStatus);
+
+	        return deliveryAgentRepository.save(deliveryAgent);
+
+	    } else {
+
+	        throw new ResourceNotFoundException(
+	                "Delivery Agent not found with id : " + id);
+	    }
 	}
 }

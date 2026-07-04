@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.pro.shipment.entity.DeliveryAgent;
+import com.pro.shipment.enums.AgentAvailability;
 
 @Service
 public interface DeliveryAgentService {
@@ -14,4 +15,8 @@ public interface DeliveryAgentService {
 	DeliveryAgent getDeliveryAgentByPhone(String phone);
 	DeliveryAgent getDeliveryAgentByVehicleNo(String vehicleNo);
 	List<DeliveryAgent> getDeliveryAgentsByRating(Double rating);
+	DeliveryAgent updateDeliveryAgent(Long id, DeliveryAgent deliveryAgent);
+	void deleteDeliveryAgent(Long id);
+	DeliveryAgent updateAvailability(Long id,
+            AgentAvailability availabilityStatus);
 }
