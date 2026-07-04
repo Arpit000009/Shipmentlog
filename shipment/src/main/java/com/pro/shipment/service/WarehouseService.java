@@ -7,4 +7,5 @@ import com.pro.shipment.entity.Warehouse;
 public interface WarehouseService {
 	Warehouse createWarehouse(Warehouse warehouse);
 	List<Warehouse> getAllWarehouses();
+	Warehouse getWarehouseById(Long id);
 }

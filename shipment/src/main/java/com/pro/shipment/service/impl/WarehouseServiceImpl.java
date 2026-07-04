@@ -1,12 +1,14 @@
 package com.pro.shipment.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pro.shipment.entity.Warehouse;
 import com.pro.shipment.exception.ResourceAlreadyExistsException;
+import com.pro.shipment.exception.ResourceNotFoundException;
 import com.pro.shipment.repository.WarehouseRepository;
 import com.pro.shipment.service.WarehouseService;
 
@@ -30,5 +32,17 @@ public class WarehouseServiceImpl implements WarehouseService {
     public List<Warehouse> getAllWarehouses() {
 
         return warehouseRepository.findAll();
+    }
+    
+    @Override
+    public Warehouse getWarehouseById(Long id) {
+
+        Optional<Warehouse> optionalWarehouse = warehouseRepository.findById(id);
+
+        if (optionalWarehouse.isPresent()) {
+            return optionalWarehouse.get();
+        } else {
+            throw new ResourceNotFoundException("Warehouse not found with id : " + id);
+        }
     }
 }
