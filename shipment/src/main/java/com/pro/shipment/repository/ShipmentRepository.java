@@ -1,9 +1,13 @@
 package com.pro.shipment.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.pro.shipment.entity.Shipment;
 
 public interface ShipmentRepository extends JpaRepository<Shipment, Long>{
 	boolean existsByTrackingNumber(String trackingNumber);
+	Shipment findByTrackingNumber(String trackingNumber);
+	List<Shipment> findByCustomerId(Long customerId);
 }

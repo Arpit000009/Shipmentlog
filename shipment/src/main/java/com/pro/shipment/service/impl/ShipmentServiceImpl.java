@@ -2,6 +2,7 @@ package com.pro.shipment.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -109,6 +110,124 @@ public class ShipmentServiceImpl implements ShipmentService{
 
 	    if (shipments.isEmpty()) {
 	        throw new ResourceNotFoundException("No shipments found.");
+	    }
+
+	    return shipments;
+	}
+	
+	@Override
+	public Shipment getShipmentById(Long id) {
+
+	    Optional<Shipment> optionalShipment = shipmentRepository.findById(id);
+
+	    if (optionalShipment.isPresent()) {
+
+	        return optionalShipment.get();
+
+	    } else {
+
+	        throw new ResourceNotFoundException(
+	                "Shipment not found with id : " + id);
+	    }
+	}
+	
+	@Override
+	public Shipment getShipmentByTrackingNumber(String trackingNumber) {
+
+	    Shipment shipment =
+	            shipmentRepository.findByTrackingNumber(trackingNumber);
+
+	    if (shipment != null) {
+
+	        return shipment;
+
+	    } else {
+
+	        throw new ResourceNotFoundException(
+	                "Shipment not found with tracking number : "
+	                        + trackingNumber);
+	    }
+	}
+	
+	@Override
+	public Shipment updateShipmentStatus(Long id,
+	                                     ShipmentStatus status) {
+
+	    Optional<Shipment> optionalShipment =
+	            shipmentRepository.findById(id);
+
+	    if (optionalShipment.isPresent()) {
+
+	        Shipment shipment = optionalShipment.get();
+
+	        shipment.setStatus(status);
+
+	        return shipmentRepository.save(shipment);
+
+	    } else {
+
+	        throw new ResourceNotFoundException(
+	                "Shipment not found with id : " + id);
+	    }
+	}
+	
+	@Override
+	public Shipment assignDeliveryAgent(Long shipmentId, Long deliveryAgentId) {
+
+	    Optional<Shipment> optionalShipment = shipmentRepository.findById(shipmentId);
+
+	    if (!optionalShipment.isPresent()) {
+	        throw new ResourceNotFoundException(
+	                "Shipment not found with id : " + shipmentId);
+	    }
+
+	    Optional<DeliveryAgent> optionalAgent =
+	            deliveryAgentRepository.findById(deliveryAgentId);
+
+	    if (!optionalAgent.isPresent()) {
+	        throw new ResourceNotFoundException(
+	                "Delivery Agent not found with id : " + deliveryAgentId);
+	    }
+
+	    Shipment shipment = optionalShipment.get();
+	    shipment.setDeliveryAgent(optionalAgent.get());
+
+	    return shipmentRepository.save(shipment);
+	}
+	
+	@Override
+	public Shipment assignWarehouse(Long shipmentId, Long warehouseId) {
+
+	    Optional<Shipment> optionalShipment = shipmentRepository.findById(shipmentId);
+
+	    if (!optionalShipment.isPresent()) {
+	        throw new ResourceNotFoundException(
+	                "Shipment not found with id : " + shipmentId);
+	    }
+
+	    Optional<Warehouse> optionalWarehouse =
+	            warehouseRepository.findById(warehouseId);
+
+	    if (!optionalWarehouse.isPresent()) {
+	        throw new ResourceNotFoundException(
+	                "Warehouse not found with id : " + warehouseId);
+	    }
+
+	    Shipment shipment = optionalShipment.get();
+	    shipment.setWarehouse(optionalWarehouse.get());
+
+	    return shipmentRepository.save(shipment);
+	}
+	
+	@Override
+	public List<Shipment> getShipmentsByCustomer(Long customerId) {
+
+	    List<Shipment> shipments =
+	            shipmentRepository.findByCustomerId(customerId);
+
+	    if (shipments.isEmpty()) {
+	        throw new ResourceNotFoundException(
+	                "No shipments found for customer id : " + customerId);
 	    }
 
 	    return shipments;
