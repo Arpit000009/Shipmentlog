@@ -10,4 +10,7 @@ public interface ShipmentRepository extends JpaRepository<Shipment, Long>{
 	boolean existsByTrackingNumber(String trackingNumber);
 	Shipment findByTrackingNumber(String trackingNumber);
 	List<Shipment> findByCustomerId(Long customerId);
+	List<Shipment> findByDeliveryAgentId(Long deliveryAgentId);
+	List<Shipment> findBySourceIgnoreCase(String source);
+	List<Shipment> findByDestinationIgnoreCase(String destination);
 }

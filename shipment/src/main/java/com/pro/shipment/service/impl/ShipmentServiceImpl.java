@@ -232,4 +232,62 @@ public class ShipmentServiceImpl implements ShipmentService{
 
 	    return shipments;
 	}
+	
+	@Override
+	public void deleteShipment(Long id) {
+
+	    Optional<Shipment> optionalShipment = shipmentRepository.findById(id);
+
+	    if (optionalShipment.isPresent()) {
+
+	        shipmentRepository.deleteById(id);
+
+	    } else {
+
+	        throw new ResourceNotFoundException(
+	                "Shipment not found with id : " + id);
+	    }
+	}
+	
+	@Override
+	public List<Shipment> getShipmentsByDeliveryAgent(Long deliveryAgentId) {
+
+	    List<Shipment> shipments =
+	            shipmentRepository.findByDeliveryAgentId(deliveryAgentId);
+
+	    if (shipments.isEmpty()) {
+	        throw new ResourceNotFoundException(
+	                "No shipments found for delivery agent id : " + deliveryAgentId);
+	    }
+
+	    return shipments;
+	}
+	
+	@Override
+	public List<Shipment> getShipmentsBySource(String source) {
+
+	    List<Shipment> shipments =
+	            shipmentRepository.findBySourceIgnoreCase(source);
+
+	    if (shipments.isEmpty()) {
+	        throw new ResourceNotFoundException(
+	                "No shipments found from source : " + source);
+	    }
+
+	    return shipments;
+	}
+	
+	@Override
+	public List<Shipment> getShipmentsByDestination(String destination) {
+
+	    List<Shipment> shipments =
+	            shipmentRepository.findByDestinationIgnoreCase(destination);
+
+	    if (shipments.isEmpty()) {
+	        throw new ResourceNotFoundException(
+	                "No shipments found for destination : " + destination);
+	    }
+
+	    return shipments;
+	}
 }

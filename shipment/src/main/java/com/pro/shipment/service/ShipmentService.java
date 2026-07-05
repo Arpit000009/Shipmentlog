@@ -14,4 +14,9 @@ public interface ShipmentService {
 	Shipment assignDeliveryAgent(Long shipmentId, Long deliveryAgentId);
 	Shipment assignWarehouse(Long shipmentId, Long warehouseId);
 	List<Shipment> getShipmentsByCustomer(Long customerId);
+	void deleteShipment(Long id);
+	List<Shipment> getShipmentsByDeliveryAgent(Long deliveryAgentId);
+	List<Shipment> getShipmentsBySource(String source);
+	List<Shipment> getShipmentsByDestination(String destination);
+	
 }

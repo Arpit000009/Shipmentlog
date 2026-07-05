@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -104,6 +105,44 @@ public class ShipmentController {
 
 	    List<Shipment> shipments =
 	            shipmentService.getShipmentsByCustomer(customerId);
+
+	    return ResponseEntity.ok(shipments);
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteShipment(@PathVariable Long id) {
+
+	    shipmentService.deleteShipment(id);
+
+	    return ResponseEntity.ok("Shipment deleted successfully.");
+	}
+	
+	@GetMapping("/delivery-agent/{deliveryAgentId}")
+	public ResponseEntity<List<Shipment>> getShipmentsByDeliveryAgent(
+	        @PathVariable Long deliveryAgentId) {
+
+	    List<Shipment> shipments =
+	            shipmentService.getShipmentsByDeliveryAgent(deliveryAgentId);
+
+	    return ResponseEntity.ok(shipments);
+	}
+	
+	@GetMapping("/source")
+	public ResponseEntity<List<Shipment>> getShipmentsBySource(
+	        @RequestParam String source) {
+
+	    List<Shipment> shipments =
+	            shipmentService.getShipmentsBySource(source);
+
+	    return ResponseEntity.ok(shipments);
+	}
+	
+	@GetMapping("/destination")
+	public ResponseEntity<List<Shipment>> getShipmentsByDestination(
+	        @RequestParam String destination) {
+
+	    List<Shipment> shipments =
+	            shipmentService.getShipmentsByDestination(destination);
 
 	    return ResponseEntity.ok(shipments);
 	}
