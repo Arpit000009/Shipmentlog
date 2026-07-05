@@ -2,6 +2,7 @@ package com.pro.shipment.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pro.shipment.enums.PaymentMethod;
 import com.pro.shipment.enums.PaymentStatus;
 
@@ -30,7 +31,8 @@ public class Payment {
     private PaymentStatus paymentStatus;
 
     private LocalDateTime paymentDateTime;
-
+    
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name="shipment_id")
     private Shipment shipment;

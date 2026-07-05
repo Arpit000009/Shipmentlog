@@ -2,6 +2,7 @@ package com.pro.shipment.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pro.shipment.enums.ShipmentStatus;
 
 import jakarta.persistence.Entity;
@@ -28,7 +29,8 @@ public class TrackingHistory {
     private ShipmentStatus status;
 
     private LocalDateTime updatedAt;
-
+    
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="shipment_id")
     private Shipment shipment;

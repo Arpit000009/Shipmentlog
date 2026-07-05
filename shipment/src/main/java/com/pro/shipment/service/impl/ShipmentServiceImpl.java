@@ -3,9 +3,11 @@ package com.pro.shipment.service.impl;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.pro.shipment.entity.Customer;
 import com.pro.shipment.entity.DeliveryAgent;
+import com.pro.shipment.entity.PackageEntity;
 import com.pro.shipment.entity.Shipment;
 import com.pro.shipment.entity.Warehouse;
 import com.pro.shipment.enums.ShipmentStatus;
@@ -18,6 +20,7 @@ import com.pro.shipment.repository.TrackingHistoryRepository;
 import com.pro.shipment.repository.WarehouseRepository;
 import com.pro.shipment.service.ShipmentService;
 
+@Service
 public class ShipmentServiceImpl implements ShipmentService{
 	
 	@Autowired
@@ -88,6 +91,12 @@ public class ShipmentServiceImpl implements ShipmentService{
 
 	    shipment.setStatus(ShipmentStatus.CREATED);
 
+	    PackageEntity packageEntity = shipment.getPackageEntity();
+
+	    if (packageEntity != null) {
+	        packageEntity.setShipment(shipment);
+	    }
+	    
 	    return shipmentRepository.save(shipment);
 
 	}

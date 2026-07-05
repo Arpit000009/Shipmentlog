@@ -2,6 +2,7 @@ package com.pro.shipment.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pro.shipment.enums.AgentAvailability;
 
 import jakarta.persistence.Column;
@@ -55,5 +56,6 @@ public class DeliveryAgent {
     private Double rating;
 
     @OneToMany(mappedBy="deliveryAgent")
+    @JsonIgnore
     private List<Shipment> shipments;
 }

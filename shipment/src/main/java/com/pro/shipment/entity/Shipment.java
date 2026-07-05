@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pro.shipment.enums.ShipmentStatus;
 
 import jakarta.persistence.CascadeType;
@@ -72,5 +73,6 @@ public class Shipment {
 
     @OneToMany(mappedBy="shipment",
                cascade=CascadeType.ALL)
+    @JsonIgnore
     private List<TrackingHistory> trackingHistory;
 }
