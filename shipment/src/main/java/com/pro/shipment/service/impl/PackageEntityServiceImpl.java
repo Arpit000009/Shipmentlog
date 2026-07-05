@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pro.shipment.entity.PackageEntity;
+import com.pro.shipment.entity.Shipment;
 import com.pro.shipment.enums.PackageType;
+
 import com.pro.shipment.exception.ResourceNotFoundException;
 import com.pro.shipment.repository.PackageEntityRepository;
 import com.pro.shipment.service.PackageEntityService;
@@ -52,4 +54,28 @@ public class PackageEntityServiceImpl implements PackageEntityService{
 	    return packages;
 	}
 	
+	@Override
+	public List<PackageEntity> getAllPackages() {
+
+	    List<PackageEntity> packages = packageRepository.findAll();
+
+	    if (packages.isEmpty()) {
+	        throw new ResourceNotFoundException("No packages found.");
+	    }
+
+	    return packages;
+	}
+	
+//	@Override
+//	public List<Shipment> getShipmentsByStatus(ShipmentStatus status) {
+//
+//	    List<Shipment> shipments = shipmentRepository.findByStatus(status);
+//
+//	    if (shipments.isEmpty()) {
+//	        throw new ResourceNotFoundException(
+//	                "No shipments found with status : " + status);
+//	    }
+//
+//	    return shipments;
+//	
 }

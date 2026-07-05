@@ -41,4 +41,12 @@ public class PackageEntityController {
 
 	    return ResponseEntity.ok(packages);
 	}
+	
+	@GetMapping
+	public ResponseEntity<List<PackageEntity>> getAllPackages() {
+
+	    List<PackageEntity> packages = packageService.getAllPackages();
+
+	    return ResponseEntity.ok(packages);
+	}
 }
