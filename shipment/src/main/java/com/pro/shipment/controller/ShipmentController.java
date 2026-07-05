@@ -1,5 +1,6 @@
 package com.pro.shipment.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,6 +144,16 @@ public class ShipmentController {
 
 	    List<Shipment> shipments =
 	            shipmentService.getShipmentsByDestination(destination);
+
+	    return ResponseEntity.ok(shipments);
+	}
+	
+	@GetMapping("/delivery-date")
+	public ResponseEntity<List<Shipment>> getShipmentsByDeliveryDate(
+	        @RequestParam LocalDate expectedDeliveryDate) {
+
+	    List<Shipment> shipments =
+	            shipmentService.getShipmentsByDeliveryDate(expectedDeliveryDate);
 
 	    return ResponseEntity.ok(shipments);
 	}

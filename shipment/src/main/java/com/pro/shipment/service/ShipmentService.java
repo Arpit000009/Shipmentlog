@@ -1,5 +1,6 @@
 package com.pro.shipment.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.pro.shipment.entity.Shipment;
@@ -18,5 +19,6 @@ public interface ShipmentService {
 	List<Shipment> getShipmentsByDeliveryAgent(Long deliveryAgentId);
 	List<Shipment> getShipmentsBySource(String source);
 	List<Shipment> getShipmentsByDestination(String destination);
+	List<Shipment> getShipmentsByDeliveryDate(LocalDate expectedDeliveryDate);
 	
 }

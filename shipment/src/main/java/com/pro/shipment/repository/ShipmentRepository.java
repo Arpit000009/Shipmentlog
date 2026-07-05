@@ -1,5 +1,6 @@
 package com.pro.shipment.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,5 @@ public interface ShipmentRepository extends JpaRepository<Shipment, Long>{
 	List<Shipment> findByDeliveryAgentId(Long deliveryAgentId);
 	List<Shipment> findBySourceIgnoreCase(String source);
 	List<Shipment> findByDestinationIgnoreCase(String destination);
+	List<Shipment> findByExpectedDeliveryDate(LocalDate expectedDeliveryDate);
 }

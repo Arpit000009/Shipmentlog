@@ -1,5 +1,6 @@
 package com.pro.shipment.service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -286,6 +287,20 @@ public class ShipmentServiceImpl implements ShipmentService{
 	    if (shipments.isEmpty()) {
 	        throw new ResourceNotFoundException(
 	                "No shipments found for destination : " + destination);
+	    }
+
+	    return shipments;
+	}
+	
+	@Override
+	public List<Shipment> getShipmentsByDeliveryDate(LocalDate expectedDeliveryDate) {
+
+	    List<Shipment> shipments =
+	            shipmentRepository.findByExpectedDeliveryDate(expectedDeliveryDate);
+
+	    if (shipments.isEmpty()) {
+	        throw new ResourceNotFoundException(
+	                "No shipments found for delivery date : " + expectedDeliveryDate);
 	    }
 
 	    return shipments;
