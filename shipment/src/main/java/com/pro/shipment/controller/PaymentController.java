@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,5 +41,14 @@ public class PaymentController {
 	    List<Payment> payments = paymentService.getAllPayments();
 
 	    return ResponseEntity.ok(payments);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Payment> getPaymentById(
+	        @PathVariable Long id) {
+
+	    Payment payment = paymentService.getPaymentById(id);
+
+	    return ResponseEntity.ok(payment);
 	}
 }

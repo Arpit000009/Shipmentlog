@@ -10,4 +10,5 @@ import com.pro.shipment.entity.Payment;
 public interface PaymentService {
 	public Payment createPayment(Payment payment, Long shipmentId);
 	List<Payment> getAllPayments();
+	Payment getPaymentById(Long id);
 }

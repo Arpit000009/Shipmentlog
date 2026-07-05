@@ -66,4 +66,20 @@ public class PaymentServiceImpl implements PaymentService{
 
 	    return payments;
 	}
+	
+	@Override
+	public Payment getPaymentById(Long id) {
+
+	    Optional<Payment> optionalPayment = paymentRepository.findById(id);
+
+	    if (optionalPayment.isPresent()) {
+
+	        return optionalPayment.get();
+
+	    } else {
+
+	        throw new ResourceNotFoundException(
+	                "Payment not found with id : " + id);
+	    }
+	}
 }
