@@ -1,6 +1,7 @@
 package com.pro.shipment.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,5 +100,17 @@ public class ShipmentServiceImpl implements ShipmentService{
 	    
 	    return shipmentRepository.save(shipment);
 
+	}
+	
+	@Override
+	public List<Shipment> getAllShipments() {
+
+	    List<Shipment> shipments = shipmentRepository.findAll();
+
+	    if (shipments.isEmpty()) {
+	        throw new ResourceNotFoundException("No shipments found.");
+	    }
+
+	    return shipments;
 	}
 }
