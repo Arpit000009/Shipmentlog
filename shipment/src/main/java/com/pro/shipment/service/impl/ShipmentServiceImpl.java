@@ -57,7 +57,7 @@ public class ShipmentServiceImpl implements ShipmentService{
 	    Customer customer =
 	            customerRepository.findById(
 	                    shipment.getCustomer().getId())
-	                    .orElse(null);
+	                    .orElseThrow(() -> new ResourceNotFoundException("Customer with id does not exists"));
 
 	    if(customer == null)
 	        throw new ResourceNotFoundException("Customer not found.");

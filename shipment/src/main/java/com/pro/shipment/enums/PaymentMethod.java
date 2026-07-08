@@ -1,6 +1,7 @@
 package com.pro.shipment.enums;
 
 public enum PaymentMethod {
+	NOT_SPECIFIED,
 	UPI,
 	CARD,
 	NET_BANKING,
