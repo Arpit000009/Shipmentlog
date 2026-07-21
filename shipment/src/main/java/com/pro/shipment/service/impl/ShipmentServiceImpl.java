@@ -11,8 +11,11 @@ import org.springframework.stereotype.Service;
 import com.pro.shipment.entity.Customer;
 import com.pro.shipment.entity.DeliveryAgent;
 import com.pro.shipment.entity.PackageEntity;
+import com.pro.shipment.entity.Payment;
 import com.pro.shipment.entity.Shipment;
 import com.pro.shipment.entity.Warehouse;
+import com.pro.shipment.enums.PaymentMethod;
+import com.pro.shipment.enums.PaymentStatus;
 import com.pro.shipment.enums.ShipmentStatus;
 import com.pro.shipment.exception.ResourceAlreadyExistsException;
 import com.pro.shipment.exception.ResourceNotFoundException;
@@ -44,65 +47,63 @@ public class ShipmentServiceImpl implements ShipmentService{
 //    @Autowired
 //    private PackageRepository packageRepository;
 	
-	@Override
-	public Shipment createShipment(Shipment shipment)  {
+    @Override
+    public Shipment createShipment(Shipment shipment) {
 
-	    if(shipmentRepository.existsByTrackingNumber(
-	            shipment.getTrackingNumber())) {
+        if (shipmentRepository.existsByTrackingNumber(shipment.getTrackingNumber())) {
+            throw new ResourceAlreadyExistsException("Tracking Number already exists.");
+        }
 
-	        throw new ResourceAlreadyExistsException(
-	                "Tracking Number already exists.");
-	    }
+        if (shipment.getCustomer() == null) {
+            throw new ResourceNotFoundException("Customer with id does not exist");
+        }
 
-	    Customer customer =
-	            customerRepository.findById(
-	                    shipment.getCustomer().getId())
-	                    .orElseThrow(() -> new ResourceNotFoundException("Customer with id does not exists"));
+        Customer customer = customerRepository.findById(shipment.getCustomer().getId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Customer with id does not exist"));
+        
+        
 
-	    if(customer == null)
-	        throw new ResourceNotFoundException("Customer not found.");
+        if (shipment.getWarehouse() == null) {
+            throw new ResourceNotFoundException("warehouse not found");
+        }
+        Warehouse warehouse = warehouseRepository.findById(shipment.getWarehouse().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Warehouse not found."));
+        
+        if (shipment.getDeliveryAgent() == null) {
+            throw new ResourceNotFoundException("Delivery agent not found");
+        }
 
+        DeliveryAgent agent = deliveryAgentRepository.findById(shipment.getDeliveryAgent().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Delivery Agent not found."));
 
+        shipment.setCustomer(customer);
+        shipment.setWarehouse(warehouse);
+        shipment.setDeliveryAgent(agent);
 
-	    Warehouse warehouse =
-	            warehouseRepository.findById(
-	                    shipment.getWarehouse().getId())
-	                    .orElse(null);
+        shipment.setShipmentDateTime(LocalDateTime.now());
+        shipment.setStatus(ShipmentStatus.CREATED);
 
-	    if(warehouse == null)
-	        throw new ResourceNotFoundException("Warehouse not found.");
+        PackageEntity packageEntity = shipment.getPackageEntity();
 
+        if (packageEntity != null) {
+            packageEntity.setShipment(shipment);
+        }
 
+        // Create Payment
+        Payment payment = new Payment();
 
-	    DeliveryAgent agent =
-	            deliveryAgentRepository.findById(
-	                    shipment.getDeliveryAgent().getId())
-	                    .orElse(null);
+        payment.setAmount(calculateAmount(shipment.getWeight()));
+        payment.setPaymentMethod(PaymentMethod.NOT_SPECIFIED);
+        payment.setPaymentStatus(PaymentStatus.PENDING);
+        payment.setPaymentDateTime(null);
 
-	    if(agent == null)
-	        throw new ResourceNotFoundException("Delivery Agent not found.");
+        // Set both sides of the relationship
+        payment.setShipment(shipment);
+        shipment.setPayment(payment);
 
-
-
-	    shipment.setCustomer(customer);
-
-	    shipment.setWarehouse(warehouse);
-
-	    shipment.setDeliveryAgent(agent);
-
-	    shipment.setShipmentDateTime(LocalDateTime.now());
-
-	    shipment.setStatus(ShipmentStatus.CREATED);
-
-	    PackageEntity packageEntity = shipment.getPackageEntity();
-
-	    if (packageEntity != null) {
-	        packageEntity.setShipment(shipment);
-	    }
-	    
-	    return shipmentRepository.save(shipment);
-
-	}
+        return shipmentRepository.save(shipment);
+    }
 	
 	@Override
 	public List<Shipment> getAllShipments() {
@@ -304,5 +305,16 @@ public class ShipmentServiceImpl implements ShipmentService{
 	    }
 
 	    return shipments;
+	}
+	
+	private Double calculateAmount(Double weight) {
+
+	    double amount = 100.0;
+
+	    if (weight > 5) {
+	        amount += (weight - 5) * 20;
+	    }
+
+	    return amount;
 	}
 }
